@@ -49,5 +49,6 @@ def takeCommand():
 
 
 
-text = takeCommand()
-speak(text)
+if __name__ == "__main__":
+   takeCommand()
+
