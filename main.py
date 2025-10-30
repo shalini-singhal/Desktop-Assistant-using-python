@@ -65,4 +65,14 @@ if "wikipedia" in query:
 elif "youtube" in query:
     speak("Opening YouTube")
     webbrowser.open("youtube.com")
-    
+
+
+elif "google" in query:
+    speak("Opening google")
+    webbrowser.open("google.com")
+
+
+elif "github" in query:
+    speak("Opening github")
+    webbrowser.open("github.com")
+
