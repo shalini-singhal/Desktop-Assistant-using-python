@@ -49,30 +49,66 @@ def takeCommand():
 
 
 
+# The function for wish me by using time
+def wish_me():
+    hour = (datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        speak("Good Morning sir. How are you doing")
+
+    elif hour>=12 and hour<18:
+        speak("Good Afternoon Sir. How are you doing")
+
+    else:
+        speak("Good Evening Sir. How are you doing")
+
+    speak("I am shalini . Tell me sir how can i help you")
+
+
+
+
 if __name__ == "__main__":
 
-    query = takeCommand().lower()
+    wish_me()
 
-if "wikipedia" in query:
-    speak("Searching Wikipedia...")
-    query = query.replace('wikipedia', "")
-    results = wikipedia.summary(query, sentences = 2)
-    speak("According to wikipedia")
-    print(results)
-    speak(results)
+    while True:
+        query = takeCommand().lower()
 
-
-elif "youtube" in query:
-    speak("Opening YouTube")
-    webbrowser.open("youtube.com")
+        if "wikipedia" in query:
+            speak("Searching Wikipedia...")
+            query = query.replace('wikipedia', "")
+            results = wikipedia.summary(query, sentences = 2)
+            speak("According to wikipedia")
+            print(results)
+            speak(results)
 
 
-elif "google" in query:
-    speak("Opening google")
-    webbrowser.open("google.com")
+        elif "youtube" in query:
+            speak("Opening YouTube")
+            webbrowser.open("youtube.com")
 
 
-elif "github" in query:
-    speak("Opening github")
-    webbrowser.open("github.com")
+        elif "google" in query:
+             speak("Opening google")
+             webbrowser.open("google.com")
+
+
+        elif "github" in query:
+             speak("Opening github")
+             webbrowser.open("github.com")
+
+
+
+        # This query for say the times
+        elif 'time' in query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speak(f"Sir, the time is {strTime}")
+            
+
+
+        elif 'goodbye' in query:
+            speak("ok sir. I am always here for you . bye bye")
+            exit()
+
+
+
 
