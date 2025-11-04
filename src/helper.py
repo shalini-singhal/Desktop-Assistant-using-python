@@ -1,65 +1,49 @@
-import pyttsx3
 import speech_recognition as sr
-import datetime
+import google.generativeai as genai
+import os
+from gtts import gTTS
 
 
-# Taking voice from my system
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-# print(voices[1].id)
-
-engine.setProperty('voice', voices[0].id)
-engine.setProperty('rate', 150)
+GOOGLE_API_KEY = "AIzaSyAhAwts5mX1TAl-TVVvzbQ-WvZzF9nvDlE"
+os.environ['GOOGLE_API_KEY'] = GOOGLE_API_KEY
 
 
-# speak function
-def speak(text):
-    """
-    
-    Args:
-        text (_type_): string
-    """
-    engine.say(text)
-    engine.runAndWait()
-
-
-
-
-
-    # speech recognition function
-def takeCommand():
-    """This function will recognize voice & return text
-    """
+def voice_input():
+    # Create a recognizer instance
     r = sr.Recognizer()
+
     with sr.Microphone() as source:
-        print("Listening...")
-        r.pause_threshold = 1
+        print("Listenint...")
         audio = r.listen(source)
 
     try:
-        print("Recognizing...")
-        query = r.recognize_google(audio, language='en-in')
-        print(f"User said:: {query}\n")
-
-    except Exception as e:
-        print("Say that again please...")
-        return "None"
-    return query
-
+        text = r.recognize_google(audio)
+        print("You said:", text)
+        return text
+    except sr.UnknownValueError:
+       print("Sorry, could not understand audio")
+    except sr.RequestError as e:
+       print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
 
 
-# The function for wish me by using time
-def wish_me():
-    hour = (datetime.datetime.now().hour)
-    if hour>=0 and hour<12:
-        speak("Good Morning sir. How are you doing")
 
-    elif hour>=12 and hour<18:
-        speak("Good Afternoon Sir. How are you doing")
+def text_to_speech(text):
+    # Create a gTTs object
+    tts = gTTS(text=text, lang='en')
 
-    else:
-        speak("Good Evening Sir. How are you doing")
+    #Save the audio as an MP3 file
+    tts.save("speech.mp3")
 
-    speak("I am shalini . Tell me sir how can i help you")
 
+
+def lim_model_object(user_text):
+    genai.configure(api_key=GOOGLE_API_KEY)
+
+    model = genai.GenerativeModel('gemini-pro')
+
+    response=model.generate_content(user_text)
+
+    result=response.text
+
+    return result

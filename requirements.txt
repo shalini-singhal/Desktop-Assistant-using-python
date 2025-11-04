@@ -2,5 +2,8 @@ SpeechRecognition
 pyttsx3
 Pyaudio
 wikipedia
-webbrowser
 streamlit
+pipwin
+gTTs
+google-generativeai
+
